@@ -79,7 +79,7 @@ begin
     histogram!(posterior_chain[:θ], normed=true, alpha=0.3, label="Posterior")
     plot!(analytical_posterior, label="Analytical posterior", lw=2)
 
-    title!("Summury of the inference procedure")
+    title!("Summary of the inference procedure")
 end
 
 # predictive checks: predictive distributions
