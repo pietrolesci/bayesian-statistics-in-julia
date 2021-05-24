@@ -90,6 +90,7 @@ begin
     # prior predictive
     prior_predictive = predict(model_predict, prior_chain)  # should be same as eq. 2.5
     analytical_prior_predictive = 1 / (births + 1)  # eq. 2.5
+    analytical_prior_predictive_dist = BetaBinomial(births, 1, 1)
     
     # `posterior_predictive` is a probability about a rv ∈ {0, ..., n}!!!
     posterior_predictive = predict(model_predict, posterior_chain)
@@ -103,6 +104,7 @@ end
 begin
     # prior predictive
     histogram(prior_predictive[:y], normed=true, alpha=0.3, label="Prior predictive", xlabel=L"y")
+    plot!(analytical_prior_predictive_dist, lw=2, label="Analytical prior predictive (BetaBinomial)")
     hline!([analytical_prior_predictive], lw=2, colour=:red, label="Analytical prior predictive")
 
     # posterior predictive
