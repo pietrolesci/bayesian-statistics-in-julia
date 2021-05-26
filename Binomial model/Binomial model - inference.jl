@@ -125,3 +125,99 @@ begin
 
     title!("Bayesian p-value (tail-area probability")
 end
+
+xs = 1:100;
+ys = [pdf(Binomial(n, θ), 5) for n in xs];
+plot(xs, ys, xlabel=L"n", label="")
+xticks!(0:5:100)
+
+begin    
+    # using optimization routines to minimize the negative loglikelihood
+    θ = fem_births / births
+    loglik(n) = -loglikelihood(Binomial(round(n), θ), fem_births);
+    computational_mle = optimize(loglik, fem_births + 1, 10000);
+    minimizer(computational_mle)
+end
+
+
+begin
+    bin = Binomial(10, .5)
+    sup = support(bin)
+    plot(
+        sup, [cdf(bin, i) for i in sup], 
+        seriestype=:step, 
+        marker=:dot,
+        legend=:topleft, 
+        label=L"p(y \leq i|\theta, n)", 
+        xlabel=L"y",
+        ylabel="cdf",
+        lw=2,
+        legendfontsize=12,
+        xticks=sup,
+    )
+    savefig("cdf.svg")
+end
+
+begin
+    bin = Binomial(10, .5)
+    plot(
+        bin, 
+        label=L"p(y = i|\theta, n)", 
+        xlabel=L"y",
+        ylabel="pmf",
+        lw=2,
+        legendfontsize=12,
+        xticks=support(bin),
+    )
+    # savefig("pdf.svg")
+end
+
+begin
+    bin = Binomial(10, .5)
+    sup = support(bin)
+    plot(
+        sup, [-loglikelihood(bin, i) for i in sup], 
+        seriestype=:step, 
+        marker=:dot,
+        legend=:top, 
+        label=L"p(y \leq i|\theta, n)", 
+        lw=2,
+        legendfontsize=12,
+        xticks=sup,
+    )
+    # savefig("cdf.svg")
+end
+
+begin
+    bin = Binomial(10, .5)
+    sup = support(bin)
+    plot(
+        sup, [-loglikelihood(bin, i) for i in sup], 
+        marker=:dot,
+        legend=:topright, 
+        ylabel="Negative log-pmf",
+        xlabel=L"y",
+        label=L"-\log p(y = i|\theta, n)", 
+        lw=2,
+        legendfontsize=12,
+        xticks=sup,
+    )
+    savefig("logpmf.svg")
+end
+
+begin
+    bin = Binomial(10, .5)
+    sup = support(bin)
+    plot(
+        sup, [-loglikelihood(bin, i) for i in sup], 
+        marker=:dot,
+        legend=:topright, 
+        ylabel="Negative log-pmf",
+        xlabel=L"y",
+        label=L"-\log p(y = i|\theta, n)", 
+        lw=2,
+        legendfontsize=12,
+        xticks=sup,
+    )
+    savefig("logpmf.svg")
+end
