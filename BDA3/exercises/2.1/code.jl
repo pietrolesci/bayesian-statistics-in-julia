@@ -1,5 +1,10 @@
-using Plots, StatsPlots, Distributions, LaTeXStrings, Random
+using Plots, StatsPlots, LaTeXStrings 
+using Distributions, Random
+
+
 Random.seed!(1994)
+cd(@__DIR__)  # set wd to the script wd
+
 
 # define prior
 prior = Beta(4, 4)

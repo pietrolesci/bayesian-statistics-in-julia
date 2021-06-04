@@ -1,13 +1,12 @@
-using Turing: rand
-using Distributions: rand, maximum
 """
 BDA3 chapter 2 - Example. Estimating the probability of a female birth
 """
 
-using Plots, StatsPlots, Distributions, LaTeXStrings
-using Turing, Random, MCMCChains
-using StatsBase: countmap
+using Plots, StatsPlots, LaTeXStrings
+using Distributions
+using Random
 using Optim: optimize, minimizer
+
 Random.seed!(1994)
 cd(@__DIR__)  # set wd to the script wd
 
