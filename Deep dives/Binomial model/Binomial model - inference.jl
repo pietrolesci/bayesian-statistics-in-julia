@@ -72,14 +72,14 @@ begin
     plot(θs, likelihoods, seriestype=:line, label="Likelihood", xlabel=L"\theta", lw=2)
 
     # prior
-    histogram!(prior_chain[:θ], normed=true, alpha=0.3, label="Prior")
+    # histogram!(prior_chain[:θ], normed=true, alpha=0.3, label="Prior")
     plot!(Uniform(0, 1), label="Analytical prior")
 
     # posterior
-    histogram!(posterior_chain[:θ], normed=true, alpha=0.3, label="Posterior")
-    plot!(analytical_posterior, label="Analytical posterior", lw=2)
+    # histogram!(posterior_chain[:θ], normed=true, alpha=0.3, label="Posterior")
+    # plot!(analytical_posterior, label="Analytical posterior", lw=2)
 
-    title!("Summary of the inference procedure")
+    title!("Summary of the  procedure")
 end
 
 # predictive checks: predictive distributions
