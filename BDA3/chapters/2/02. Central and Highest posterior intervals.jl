@@ -1,7 +1,7 @@
 using Turing: rand
 using Distributions: rand, maximum
 """
-BDA chapter 2 - Example. Estimating the probability of a female birth
+BDA3 chapter 2 - Example. Estimating the probability of a female birth
 """
 
 using Plots, StatsPlots, Distributions, LaTeXStrings
