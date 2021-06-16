@@ -20,13 +20,13 @@ fem_births = 437
 begin
     # using Distribution.jl convenience method
     distributionsjl_mle = fit_mle(Binomial, births, [fem_births]).p
-    
+
     # and computing is by "hand" as it has a closed form solution
     analytical_mle = fem_births / births
 
     # using optimization routines to minimize the negative loglikelihood
     loglik(θ) = -loglikelihood(Binomial(births, θ), fem_births)
-    computational_mle = optimize(loglik, 0., 1.)
+    computational_mle = optimize(loglik, 0.0, 1.0)
     optimized_mle = minimizer(computational_mle)
 
     println("Distributions.jl MLE: $(distributionsjl_mle)")
@@ -42,21 +42,18 @@ begin
 
     # evaluate likelihood of data at a grid of θ values in its support
     θs = rand(prior, 1000)
-    likelihood = [
-        pdf(Binomial(births, θ), fem_births) 
-        for θ in θs
-    ]
+    likelihood = [pdf(Binomial(births, θ), fem_births) for θ in θs]
 
     # analytical posterior
     posterior = Beta(fem_births + 1, births - fem_births + 1)
 
     # plots
-    plot(prior, label="Prior", lw=2, legend=:topleft)
-    plot!(posterior, label="Posterior", lw=2, legend=:topleft)
-    plot!(twinx(), θs, likelihood, label="Likelihood", seriestype=:line)
+    plot(prior, label = "Prior", lw = 2, legend = :topleft)
+    plot!(posterior, label = "Posterior", lw = 2, legend = :topleft)
+    plot!(twinx(), θs, likelihood, label = "Likelihood", seriestype = :line)
     xlabel!(L"\theta")
     title!("Summary of the inference procedure")
-    
+
     println("Distributions.jl MLE: $(distributionsjl_mle)")
     println("Analytical MLE: $(analytical_mle)")
     println("Optimized MLE: $(optimized_mle)")
