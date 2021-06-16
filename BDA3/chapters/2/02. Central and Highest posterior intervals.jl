@@ -26,13 +26,13 @@ end
 
 
 function highest_posterior_density_interval(d::UnivariateDistribution; α=0.95, nx=1000)
-	"""
+    """
 	Compute highest posterior density intervals
 
 	NOTE: does not work with infinite supports, yet
 	"""
     # discretize over the support
-	lb = isfinite(minimum(support(d))) ? minimum(support(d)) : -1000
+    lb = isfinite(minimum(support(d))) ? minimum(support(d)) : -1000
 	ub = isfinite(maximum(support(d))) ? maximum(support(d)) : 1000
 
 	# histogram approximation of area under pdf
