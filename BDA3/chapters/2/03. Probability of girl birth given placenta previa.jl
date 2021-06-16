@@ -46,8 +46,8 @@ end
 begin
     # to compute 95% credible intervals
     α = 0.05
-    a = quantile(posterior, α/2) |> round3
-    b = quantile(posterior, 1 - α/2) |> round3
+    a = quantile(posterior, α / 2) |> round3
+    b = quantile(posterior, 1 - α / 2) |> round3
     
     println(
         """
@@ -70,8 +70,8 @@ begin
     posterior_normal_approx = Normal(mean(posterior), std(posterior))
 
     # to compute 95% credible intervals
-    a_normal_approx = quantile(posterior_normal_approx, α/2) |> round3
-    b_normal_approx = quantile(posterior_normal_approx, 1 - α/2) |> round3
+    a_normal_approx = quantile(posterior_normal_approx, α / 2) |> round3
+    b_normal_approx = quantile(posterior_normal_approx, 1 - α / 2) |> round3
 
     println(
         """
@@ -118,8 +118,8 @@ begin
     posterior_normal_approx_sample = Normal(mean(chain), std(chain))
 
     # to compute 95% credible intervals
-    a_normal_approx_sample = quantile(posterior_normal_approx_sample, α/2) |> round3
-    b_normal_approx_sample = quantile(posterior_normal_approx_sample, 1 - α/2) |> round3
+    a_normal_approx_sample = quantile(posterior_normal_approx_sample, α / 2) |> round3
+    b_normal_approx_sample = quantile(posterior_normal_approx_sample, 1 - α / 2) |> round3
 
     println(
         """
@@ -145,8 +145,8 @@ begin
     posterior_normal_approx_sample_logit = Normal(mean(chain_logit), std(chain_logit))
 
     # to compute 95% credible intervals
-    a_normal_approx_sample_logit = quantile(posterior_normal_approx_sample_logit, α/2) |> logistic |> round3
-    b_normal_approx_sample_logit = quantile(posterior_normal_approx_sample_logit, 1 - α/2) |> logistic |> round3
+    a_normal_approx_sample_logit = quantile(posterior_normal_approx_sample_logit, α / 2) |> logistic |> round3
+    b_normal_approx_sample_logit = quantile(posterior_normal_approx_sample_logit, 1 - α / 2) |> logistic |> round3
 
     println(
         """
@@ -180,8 +180,8 @@ begin
         b = s - a |> round3
         
         posterior = Beta(fem_births + a, births - fem_births + b)
-        lb = quantile(posterior, α/2) |> round3
-        ub = quantile(posterior, 1 - α/2)|> round3
+        lb = quantile(posterior, α / 2) |> round3
+        ub = quantile(posterior, 1 - α / 2) |> round3
 
         push!(res, (m, s, round3(median(posterior)), "[$lb, $ub]"))
     end
@@ -216,23 +216,23 @@ begin
     posterior /= sum(posterior)  # normalize
     
     # inverse cdf sampling
-    # find the value smallest value θ at which the cumulative sum of the posterior densities is greater than r
+    #  find the value smallest value θ at which the cumulative sum of the posterior densities is greater than r
     posterior_cdf = cumsum(posterior)
     n_samples = 100_000
     chain = θs[[sum(posterior_cdf .< r) + 1 for r in rand(n_samples)]]
 
     # statistics
     prior_mean = sum(prior .* θs)
-    prior_std = (sum((θs .- prior_mean).^2) / length(θs))^(1/2)
+    prior_std = (sum((θs .- prior_mean).^2) / length(θs))^(1 / 2)
     posterior_mean = sum(posterior .* θs)
-    posterior_std = (sum((θs .- posterior_mean).^2) / length(θs))^(1/2)
+    posterior_std = (sum((θs .- posterior_mean).^2) / length(θs))^(1 / 2)
 
     chain = sort(chain)
     a_sampled = chain[Int(n_samples * .025)] |> round3
     b_sampled = chain[Int(n_samples * .975)] |> round3
 
     println(
-        """
+    """
         \nNonconjugate prior:
         \tPrior mean: $(prior_mean |> round3)
         \tPrior std: $(prior_std |> round3)

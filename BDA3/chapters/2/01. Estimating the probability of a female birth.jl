@@ -56,7 +56,7 @@ begin
     plot!(twinx(), θs, likelihood, label="Likelihood", seriestype=:line)
     xlabel!(L"\theta")
     title!("Summary of the inference procedure")
-
+    
     println("Distributions.jl MLE: $(distributionsjl_mle)")
     println("Analytical MLE: $(analytical_mle)")
     println("Optimized MLE: $(optimized_mle)")
